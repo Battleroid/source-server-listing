@@ -1,0 +1,24 @@
+{% extends 'default.html' %}
+{% block title %}Servers{% endblock %}
+{% block main %}
+    <div class="row">
+        {% if servers %}
+            <div class="col-md-12">
+                <ul class="list-group">
+                    {% for server in servers %}
+                        <li class="list-group-item">
+                            {% if server.status %}
+                                <span class="badge badge-success">Online</span>
+                            {% else %}
+                                <span class="badge badge-danger">Offline</span>
+                            {% endif %}
+                            <a href="steam://connect/{{ server.address }}:{{ server.port }}">{{ server.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>No servers.</p>
+        {% endif %}
+    </div>
+{% endblock %}
