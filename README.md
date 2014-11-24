@@ -8,3 +8,8 @@ Source server offline/online status listing of servers.
 ```python
 > a = Server.query.get(('defunct.com', 27015))
 ```
+
+requires
+--------
+
+Requires [python-valve](https://github.com/Holiverh/python-valve).
