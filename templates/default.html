@@ -6,18 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://bootflat.github.io/bootflat/css/bootflat.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}"/>
 </head>
 <body>
 <main>
-<div class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url_for('index') }}">WVN Server Status</a>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('index') }}">WVN Server Status</a>
+        </div>
     </div>
-</div>
     <div class="container-fluid">
-        {% block main %}
-        {% endblock %}
+        <div class="row">
+            {% block main %}
+            {% endblock %}
+        </div>
     </div>
 </main>
 </body>

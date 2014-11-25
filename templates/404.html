@@ -1,0 +1,8 @@
+{% extends 'default.html' %}
+{% block title %}404 - Not Found{% endblock %}
+{% block main %}
+    <div class="col-md-12 text-center">
+        <h3>What are you looking for?</h3>
+        <a href="{{ url_for('index') }}">This is what you want.</a>
+    </div>
+{% endblock %}

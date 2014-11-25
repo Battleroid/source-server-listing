@@ -30,7 +30,7 @@ class Server(db.Model):
             info = server.get_info()
             self.status = True
         except (gaierror, NoResponseError):
-            pass
+            self.last_checked = datetime.now()
 
     def update(self):
         self.status = False
@@ -40,13 +40,16 @@ class Server(db.Model):
         return '<Server %r:%r ON: %r>' % (self.address, self.port, self.status)
 
 def update_all():
-    servers = Server.query.all()
-    for server in servers:
+    for server in Server.query.all():
         server.update()
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('404.html'), 404
 
 @app.route('/')
 def index():
-    return render_template('index.html', servers=Server.query.with_entities(Server.name, Server.address, Server.port, Server.status).all())
+    return render_template('index.html', servers=Server.query.with_entities(Server.name, Server.address, Server.port, Server.status, Server.last_checked).all())
 
 if __name__ == '__main__':
     app.run()
