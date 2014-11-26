@@ -11,11 +11,7 @@
                         {% else %}
                             <span class="badge badge-danger">Offline</span>
                         {% endif %}
-                        <a href="steam://connect/{{ server.address }}:{{ server.port }}">
-                            {% if server.status %}{{ server.name }}
-                        {% else %}
-                            {{ server.address }}
-                        {% endif %}</a>
+                        <a href="steam://connect/{{ server.address }}:{{ server.port }}">{{ server.address }}:{{ server.port }}</a>
                     </li>
                 {% endfor %}
             </ul>

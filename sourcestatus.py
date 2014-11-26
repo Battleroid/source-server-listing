@@ -55,6 +55,7 @@ class Server(db.Model):
 
 class ServerSchema(Schema):
     last_checked = fields.DateTime(format='%H:%M %Y-%m-%d')
+    map = fields.Function(lambda obj: obj.map.title())
 
     class Meta:
         fields = ('address', 'port', 'name', 'game', 'map', 'version', 'players', 'maxplayers', 'status', 'last_checked')
@@ -78,19 +79,28 @@ def get_servers(offset=0):
     if request.method == 'GET':
         servers = Server.query.offset(offset * 10).limit(10).all()
         result = ServerSchema(servers, many=True)
-        return jsonify({ 'offset' : offset * 10, 'servers' : result.data})
+        json = jsonify({ 'offset' : offset * 10, 'servers' : result.data})
+        json.status_code = 200
+        return json
 
 @app.route('/server', methods=['GET'])
 def get_server_info():
     if request.method == 'GET':
         address, port = request.args.get('address'), request.args.get('port')
-        server = Server.query.get_or_404((address, int(port)))
-        result = ServerSchema(server)
-        return jsonify(result.data)
+        server = Server.query.get((address, int(port)))
+        if server:
+            result = ServerSchema(server)
+            json = jsonify(result.data)
+            json.status_code = 200
+            return json
+        else:
+            result = jsonify({'status' : 404, 'message' : 'Not Found'})
+            result.status_code = 404
+            return result
 
 @app.route('/')
 def index():
-    return render_template('index.html', servers=Server.query.with_entities(Server.name, Server.address, Server.port, Server.status, Server.last_checked).all())
+    return render_template('index.html', servers=Server.query.with_entities(Server.address, Server.port, Server.status).all())
 
 if __name__ == '__main__':
     app.run()
