@@ -100,7 +100,7 @@ def get_server_info():
 
 @app.route('/')
 def index():
-    return render_template('index.html', servers=Server.query.with_entities(Server.address, Server.port, Server.status).all())
+    return render_template('index.html', servers=Server.query.with_entities(Server.address, Server.port, Server.status).order_by(Server.status.desc(), Server.address.asc(), Server.port.asc()).all())
 
 if __name__ == '__main__':
     app.run()
