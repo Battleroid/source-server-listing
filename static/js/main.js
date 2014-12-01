@@ -1,29 +1,40 @@
-$("[data-toggle='modal']").click(function(e) {
+// init vars
+var modal = $("#server-modal");
+var alert = $("#server-alert");
+
+// hide
+alert.hide();
+
+$(".server").click(function(e) {
     e.preventDefault();
 
-    // get values from data-* for ajax request
-    var address = $(this).attr('data-address');
-    var port = $(this).attr('data-port');
+    // get values from item
+    var address = $(this).attr("data-address");
+    var port = $(this).attr("data-port");
 
-    // modal globals
-    var modal = $("#server-modal");
-
-    // do ajax request
+    // do ajax
     $.ajax({
         url: "/server?address=" + address + "&port=" + port,
         type: "GET",
         dataType: "json",
         context: this,
-        success: function(values) {
-            modal.find(".modal-body").html("Information about: " + values.name);
-            if (values.status == false)
-                modal.find("button#join").prop("disabled", true);
-            else
+        success: function(result) {
+            // set vars for modal
+            var header = modal.find(".modal-header");
+            var body = modal.find(".modal-body");
+            var joinBtn = modal.find("button#join");
+
+            modal.find(".modal-body").html("Server name: " + result.name);
+            if (result.status)
                 modal.find("button#join").prop("disabled", false);
-            console.log(values);
+            else
+                modal.find("button#join").prop("disabled", true);
+            modal.modal('show');
+            console.log(result);
         },
         error: function() {
-            alert("Problem fetching JSON");
-        }
-    })
+            alert.show().delay(3000).fadeOut(300);
+        },
+        timeout: 3000
+    });
 });
