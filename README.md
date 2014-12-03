@@ -13,3 +13,8 @@ requires
 --------
 
 Requires [python-valve](https://github.com/Holiverh/python-valve).
+
+example
+-------
+
+![example installation working](misc/example.gif)

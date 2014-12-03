@@ -12,10 +12,11 @@
 <main>
     <div class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('index') }}">WVN Server Status</a>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Status</a>
         </div>
     </div>
     <div class="container-fluid">
+        {# alert for broken AJAX call #}
         {% include 'alert.html' %}
         <div class="row">
             {% block main %}
@@ -23,12 +24,13 @@
         </div>
     </div>
 </main>
+{# modal for displaying extended information for server #}
 {% include 'modal.html' %}
 <!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<!-- Bootflat's JS files.-->
+<!-- Bootflat's JS files -->
 <script src="https://bootflat.github.io/bootflat/js/icheck.min.js"></script>
 <script src="https://bootflat.github.io/bootflat/js/jquery.fs.selecter.min.js"></script>
 <script src="https://bootflat.github.io/bootflat/js/jquery.fs.stepper.min.js"></script>
