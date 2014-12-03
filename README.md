@@ -17,4 +17,6 @@ Requires [python-valve](https://github.com/Holiverh/python-valve).
 example
 -------
 
+(so far)
+
 ![example installation working](misc/example.gif)
